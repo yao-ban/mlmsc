@@ -112,9 +112,9 @@ class MLMSC_Model:
                 initial=True)
 
             # add new loci
-            geneTree, completeCount, incompleteCount, unlinked_d_number_total, unlinked_d_number_survived = \
+            geneTree, completeCount, incompleteCount = \
                 originalHaplotypeTree.addNewLociShell(events=events, 
-                haplotypeTree=originalHaplotypeTree, level=0, completeCount=1, incompleteCount=0, unlinked_d_number_total=0, unlinked_d_number_survived=0)
+                haplotypeTree=originalHaplotypeTree, level=0, completeCount=1, incompleteCount=0)
             geneTree.readFromSkbioTree(geneTree.getSkbioTree(), rename = False)
             self.geneSkbioTree = geneTree.getSkbioTree()
             
@@ -243,8 +243,6 @@ class MLMSC_Model:
                     continue 
                 else:
                     i = i + 1
-                    if i%1000 == 0:
-                        print('finished.')
 
                     f = open(outputDir + '/' + fileName,'a')
                     f.write(str(num_dup2) + ',' + str(n_genes) + ',' + str(len(names)) + '\n') 
@@ -267,6 +265,11 @@ class MLMSC_Model:
                             f.write(char)
                     f.close()
 
+                    if repeatNumber == 1:
+                        print('gene tree:')    
+                        print(geneSkbioTreeTruncated.ascii_art())
+
+
                     # if single_tip_num >= 4:
                     #     f = open(outputDir + '/single_tree_' + name + '.newick','a')
                     #     string =  str(singleTree)
@@ -287,6 +290,7 @@ class MLMSC_Model:
                     #             f.write(char)
                     #     f.close()
 
+        print('finished.')
     def setParameters(self, coalescent, recombination, duplication, transfer, loss, unlink,
         repeat, hemiplasy, verbose):
         if coalescent is None:

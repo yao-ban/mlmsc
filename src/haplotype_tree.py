@@ -738,12 +738,12 @@ class HaplotypeTree:
             # no coalescent
             return None, None, None
 
-    def addNewLociShell(self, events, haplotypeTree, level, completeCount, incompleteCount, unlinked_d_number_total, unlinked_d_number_survived):
+    def addNewLociShell(self, events, haplotypeTree, level, completeCount, incompleteCount):
         global dic 
         dic = defaultdict(list)
-        return self.addNewLoci(events=events, haplotypeTree=haplotypeTree, level=level, completeCount=completeCount, incompleteCount=incompleteCount, unlinked_d_number_total=unlinked_d_number_total, unlinked_d_number_survived=unlinked_d_number_survived)
+        return self.addNewLoci(events=events, haplotypeTree=haplotypeTree, level=level, completeCount=completeCount, incompleteCount=incompleteCount)
 
-    def addNewLoci(self, events, haplotypeTree, level, completeCount, incompleteCount, unlinked_d_number_total, unlinked_d_number_survived):
+    def addNewLoci(self, events, haplotypeTree, level, completeCount, incompleteCount):
         """
         1. simulate events on the current locus tree 
         2. construct the corresponding new locus tree
@@ -767,14 +767,12 @@ class HaplotypeTree:
                 speciesId = event['speciesNodeId']
                 distanceAboveSpeciesNode = event['distanceToSpeciesNode']
 
-                newHaplotypeTree, chosenGeneName, geneNodeName, ancestral, completeCount, incompleteCount, unlinked_d_number_total, unlinked_d_number_survived = \
+                newHaplotypeTree, chosenGeneName, geneNodeName, ancestral, completeCount, incompleteCount = \
                     self.__addNewLociRecurse(haplotypeTree=haplotypeTree,
                     event=event, newLocusRootId=speciesId,
                     distanceAboveRoot=distanceAboveSpeciesNode, 
                     level=level, completeCount=completeCount,
-                    incompleteCount=incompleteCount,
-                    unlinked_d_number_total=unlinked_d_number_total, 
-                    unlinked_d_number_survived=unlinked_d_number_survived)
+                    incompleteCount=incompleteCount)
 
                 if newHaplotypeTree:
                     verbose = self.parameters['v']
@@ -859,7 +857,6 @@ class HaplotypeTree:
                     else:
                         # print('non-ancestral')
                         # non-ancestral
-                        unlinked_d_number_total += 1
                         geneNodeName, distanceAboveGeneNode, branchLength = \
                             self.coalescentJoining(
                             event=event, haplotypeTree=haplotypeTree)
@@ -868,7 +865,6 @@ class HaplotypeTree:
                             eventIndex = eventIndex + 1
                             dic[level].append(eventIndex)
                             # print(dic)
-                            unlinked_d_number_survived += 1 
                             # print(str(level) + '_event' + str(eventIndex))
                             
                             for node in newHaplotypeTree.getSkbioTree().traverse():
@@ -991,9 +987,9 @@ class HaplotypeTree:
                         if verbose:
                             print('haplotype tree after:')	
                             print(haplotypeTree.getSkbioTree().ascii_art())
-        return haplotypeTree, completeCount, incompleteCount, unlinked_d_number_total, unlinked_d_number_survived
+        return haplotypeTree, completeCount, incompleteCount
 
-    def __addNewLociRecurse(self, haplotypeTree, event, newLocusRootId, distanceAboveRoot, level, completeCount, incompleteCount, unlinked_d_number_total, unlinked_d_number_survived):
+    def __addNewLociRecurse(self, haplotypeTree, event, newLocusRootId, distanceAboveRoot, level, completeCount, incompleteCount):
         copiedFullProcess = self.fullCoalescentProcess
 
         if (event['type'] == 'duplication' or event['type'] == 'transfer'): 
@@ -1069,11 +1065,10 @@ class HaplotypeTree:
                 haplotypeTree=newHaplotypeTree, 
                 event=event,
                 rootLength=rootLength)
-            _, completeCount, incompleteCount, unlinked_d_number_total, unlinked_d_number_survived = \
+            _, completeCount, incompleteCount = \
                 newHaplotypeTree.addNewLoci(events=newEvents, haplotypeTree=newHaplotypeTree, 
-                level=level+1, completeCount=completeCount, incompleteCount=incompleteCount, 
-                unlinked_d_number_total=unlinked_d_number_total, unlinked_d_number_survived=unlinked_d_number_survived)
-            return newHaplotypeTree, chosenGeneName, geneNodeName, ancestral, completeCount, incompleteCount, unlinked_d_number_total, unlinked_d_number_survived
+                level=level+1, completeCount=completeCount, incompleteCount=incompleteCount)
+            return newHaplotypeTree, chosenGeneName, geneNodeName, ancestral, completeCount, incompleteCount
 
     """
     unused functions
