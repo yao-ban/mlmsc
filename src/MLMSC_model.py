@@ -56,7 +56,7 @@ class MLMSC_Model:
         c_name = str(1/coalescentArgs)
         name = 'D' + d_name + 'L' + l_name + 'C' + c_name
 
-        outputDir = './output_ex'
+        outputDir = './output'
         if not os.path.exists(outputDir):
             os.makedirs(outputDir)
 
@@ -245,7 +245,7 @@ class MLMSC_Model:
                     i = i + 1
 
                     f = open(outputDir + '/' + fileName,'a')
-                    f.write(str(num_dup2) + ',' + str(n_genes) + ',' + str(len(names)) + '\n') 
+                    f.write(str(len(survived_only)-1) + ',' + str(n_genes) + ',' + str(len(names)) + '\n') 
 
                     f = open(outputDir + '/gene_tree_' + name + '.newick','a')
                     string = str(geneSkbioTreeTruncated)
