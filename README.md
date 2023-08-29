@@ -3,9 +3,11 @@
 The MLMSC-II Simulator is a program for the simulation of gene family evolution within a species tree based on the updated Multilocus Multipecies Coalescent (MLMSC-II) model. The MLMSC-II model generalises the multispecies coalescent to gene families, and is designed to capture all possible scenarios that can arise through incomplete lineage sorting, gene duplication, transfer and loss, and any interaction between these processes. The MLMSC-II combines forward- and backward-in-time modelling in order to properly account for copy number hemiplasy and linkage between loci. 
 
 ## Citation
-If you use the MLMSC-II simulator, please cite:
 
-Qiuyi Li, Celine Scornavacca, Nicolas Galtier, Yao-Ban Chan, The Multilocus Multispecies Coalescent: A Flexible New Model of Gene Family Evolution, Systematic Biology, Volume 70, Issue 4, July 2021, Pages 822–837, https://doi.org/10.1093/sysbio/syaa084
+Pending...
+
+The simulation scripts and dataset for the paper **The effect of copy number hemiplasy on gene family evolution** can be found at https://github.com/QiuyiLi/MLMSC-II_simulation_script
+
 ## Obtaining the program
 
 ### Download
