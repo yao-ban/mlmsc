@@ -996,7 +996,7 @@ class HaplotypeTree:
             speciesSkbioTree = self.speciesTree.getSkbioTree()
             newLocusRootName = self.speciesTree.getNodeById(newLocusRootId).name
 
-            newLocusSkbioTree = speciesSkbioTree.find(newLocusRootName).deepcopy()
+            newLocusSkbioTree = speciesSkbioTree.find(newLocusRootName).copy(deep=True)
             newLocusTreeNames = [node.name for node in newLocusSkbioTree.traverse()]
             newLocusTreeNodes = [node for node in self.speciesTree.getNodes() if node.name in newLocusTreeNames]
             # if len(newLocusTreeNodes) == 1 and event['type'] == 'transfer':
