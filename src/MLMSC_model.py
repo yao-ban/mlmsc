@@ -126,7 +126,7 @@ class MLMSC_Model:
             # geneTree.readFromSkbioTree(self.geneSkbioTree, rename = False)
             # self.geneSkbioTree = geneTree.getSkbioTree()
 
-            geneSkbioTreeTruncated = self.geneSkbioTree.deepcopy()
+            geneSkbioTreeTruncated = self.geneSkbioTree.copy(deep=True)
             geneSkbioTreeTruncated = self.cutTree(geneSkbioTreeTruncated)
 
             if 'loss' in geneSkbioTreeTruncated.root().name: 
@@ -208,7 +208,7 @@ class MLMSC_Model:
 
                 # geneSkbioTreeTruncated = geneSkbioTreeTruncated.shear(all_names)
 
-                randomTree = geneSkbioTreeTruncated.deepcopy()
+                randomTree = geneSkbioTreeTruncated.copy(deep=True)
                 randomTree = randomTree.shear(names)
 
                 singleTree = None
